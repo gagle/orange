@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "affected:apps": "nx affected:apps",
+    "affected:libs": "nx affected:libs",
+    "affected:build": "nx affected:build",
+    "affected:test": "nx affected:test",
+    "affected:dep-graph": "nx affected:dep-graph",
+    "affected": "nx affected --exclude showcase-frontend-core,showcase-user,showcase-verification-task",
     "build:web": "nx build web",
     "build:api": "nx build api",
     "eslint": "eslint",
