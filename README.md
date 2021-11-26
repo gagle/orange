@@ -1,41 +1,57 @@
-# Start
+# orange
 
-Frontend:
+The project uses Nx which helps to improve and simplifies the development experience.
+
+## Setup
+
+The setup has been carefully adapted to the needs based on the Nx project generator for Angular and Nestjs. It includes:
+
+- Nx
+- Eslint (ts, html)
+- Stylelint (scss)
+- Prettier (ts, scss)
+- JsBeautify (html)
+- Jest + Spectator
+- Lintstaged + Husky
+- VSCode integration
+- GitHub pull request workflow validating the build, test and lint
+- Docker (api)
+
+## Development
+
+Start frontend and api in different terminals:
 
 ```
 npm run start:web
-```
-
-Api:
-
-```
 npm run start:api
 ```
 
-# Build
+Or just in one terminal leveraging Nx capabilities:
 
-Frontend:
+```
+npm run nx -- run-many --target=serve --projects=api,web --parallel
+```
+
+## Build
 
 ```
 npm run build:web
-```
-
-Api:
-
-```
 npm run build:api
 ```
 
 # Test
 
-Frontend:
-
 ```
 npm run test:web
-```
-
-Api:
-
-```
 npm run test:api
+```
+
+# Docker
+
+3 commands are available for preparing the docker container for the api:
+
+```
+npm run docker:build      # Builds the image
+npm run docker:up         # Starts the container
+npm run docker:down       # Stops the container
 ```
