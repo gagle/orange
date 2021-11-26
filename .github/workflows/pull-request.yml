@@ -1,0 +1,179 @@
+# Workflow triggered by opening or synchronizing a pull request
+
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize, ready_for_review]
+
+env:
+  NODE_VERSION: 14
+
+jobs:
+  pre-run:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Cancel previous workflow runs
+        uses: fkirc/skip-duplicate-actions@v2.2.0
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Nx check changes
+        id: nx-changes
+        uses: gagle/nx-check-changes@v1.0.0
+
+      - name: Check files to lint
+        id: lint-files
+        uses: dorny/paths-filter@v2
+        with:
+          list-files: shell
+          filters: |
+            lint:
+              - apps/**
+              - libs/**
+
+    outputs:
+      skip: ${{ steps.nx-changes.outputs.not-affected }}
+      lint-files-enabled: ${{ steps.lint-files.outputs.lint == 'true' }}
+      lint-files: ${{ steps.lint-files.outputs.lint_files }}
+
+  pull-request-build:
+    runs-on: ubuntu-latest
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx browserslist@latest --update-db
+
+      - name: Type-check affected apps
+        run: npm run affected:build -- --parallel -c development --base=${{ github.event.pull_request.base.sha }} --head=${{ github.event.pull_request.head.sha }}
+
+  pull-request-test:
+    runs-on: ubuntu-latest
+    needs: [pre-run]
+    if: needs.pre-run.outputs.skip == 'false'
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx browserslist@latest --update-db
+
+      - name: Test affected apps and libs
+        run: npm run affected:test -- --parallel --base=${{ github.event.pull_request.base.sha }} --head=${{ github.event.pull_request.head.sha }}
+
+      - name: Print failed affected apps or libs
+        if: failure()
+        run: |
+          affected=$(npm run --silent nx -- print-affected --target test --only-failed --select tasks.target.project --base=${{ github.event.pull_request.base.sha }} --head=${{ github.event.pull_request.head.sha }})
+          echo $affected
+
+  pull-request-lint:
+    runs-on: ubuntu-latest
+    needs: [pre-run]
+    if: needs.pre-run.outputs.lint-files-enabled == 'true'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx browserslist@latest --update-db
+
+      - name: Filter out removed files
+        id: filtered-files
+        run: |
+          IFS=$' '
+          files_list=(${{ needs.pre-run.outputs.lint-files }})
+
+          for file in "${files_list[@]}"; do :
+            if [ -f $file ]; then
+              filtered_files="$filtered_files $file"
+            fi
+          done
+
+          echo "::set-output name=filtered-files::$filtered_files"
+
+      - name: Lint TS and HTML files
+        run: |
+          IFS=$' '
+          files_list=(${{ steps.filtered-files.outputs.filtered-files }})
+
+          for file in "${files_list[@]}"; do :
+            if [[ "$file" == *.ts ]] || [[ "$file" == *.html ]]; then
+              filtered_files="$filtered_files $file"
+            fi
+          done
+
+          if [ ! -z "$filtered_files" ]; then
+            npm run eslint $filtered_files
+          fi
+
+      - name: Lint SCSS files
+        run: |
+          IFS=$' '
+          files_list=(${{ steps.filtered-files.outputs.filtered-files }})
+
+          for file in "${files_list[@]}"; do :
+            if [[ "$file" == *.scss ]]; then
+              filtered_files="$filtered_files $file"
+            fi
+          done
+
+          if [ ! -z "$filtered_files" ]; then
+            npm run stylelint $filtered_files
+          fi

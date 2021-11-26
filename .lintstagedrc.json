@@ -1,0 +1,15 @@
+{
+  "apps/**/*.html": [
+    "js-beautify -r"
+  ],
+  "apps/**/*.scss": [
+    "stylelint --syntax scss --fix",
+    "prettier --write"
+  ],
+  "apps/**/*.ts": [
+    "eslint --fix"
+  ],
+  "libs/**/*.ts": [
+    "eslint --fix"
+  ]
+}

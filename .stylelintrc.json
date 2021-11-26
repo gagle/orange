@@ -1,0 +1,39 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier",
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-idiomatic-order"
+  ],
+  "plugins": [
+    "stylelint-declaration-block-no-ignored-properties",
+    "stylelint-no-unsupported-browser-features",
+    "stylelint-order",
+    "stylelint-scss",
+    "stylelint-use-nesting"
+  ],
+  "rules": {
+    "declaration-no-important": true,
+    "selector-max-id": 1,
+    "max-nesting-depth": 3,
+    "selector-type-no-unknown": [true, {
+      "ignore": ["custom-elements"]
+    }],
+    "selector-pseudo-element-no-unknown": [true, {
+      "ignorePseudoElements": ["ng-deep", "input-placeholder"]
+    }],
+    "color-named": "never",
+    "selector-no-qualifying-type": [true, {
+      "ignore": ["attribute", "class"]
+    }],
+
+    "csstools/use-nesting": true,
+
+    "order/properties-alphabetical-order": null,
+
+    "plugin/declaration-block-no-ignored-properties": true,
+    "plugin/no-unsupported-browser-features": [true, {
+      "severity": "warning"
+    }]
+  }
+}

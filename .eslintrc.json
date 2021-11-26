@@ -1,0 +1,123 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": [
+    "@nrwl/nx",
+    "import",
+    "no-use-extend-native",
+    "prefer-arrow",
+    "unicorn",
+    "simple-import-sort",
+    "unused-imports"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nrwl/nx/typescript",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:unicorn/recommended",
+        "plugin:compat/recommended",
+        "plugin:prettier/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
+      ],
+      "rules": {
+        "max-classes-per-file": ["error", 1],
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "eqeqeq": "error",
+        "sort-imports": "off",
+        "no-extend-native": "error",
+        "no-restricted-imports": [
+          "error",
+          {
+            "name": "@ngneat/spectator",
+            "message": "Use @ngneat/spectator/jest instead."
+          }
+        ],
+        "quotes": ["error", "single", {
+          "avoidEscape": true,
+          "allowTemplateLiterals": false
+        }],
+
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ],
+
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-non-null-assertion": "off",
+
+        "jest/expect-expect": [
+          "warn",
+          {
+            "assertFunctionNames": ["expect", "*.expectOne", "expectObservable", "expectSubscriptions"]
+          }
+        ],
+
+        "jest/consistent-test-it": "error",
+
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-unresolved": "off",
+        "import/order": "off",
+        "import/no-deprecated": "warn",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-internal-modules": [
+          "error",
+          {
+            "allow": [
+              "@angular/**/*",
+              "@ngneat/spectator/jest",
+              "rxjs/ajax",
+              "rxjs/operators",
+              "rxjs/testing",
+              "rxjs/webSocket",
+              "src/environment/environment",
+              "zone.js/dist/zone",
+              "jest-preset-angular/setup-jest"
+            ]
+          }
+        ],
+
+        "no-use-extend-native/no-use-extend-native": "error",
+
+        "prefer-arrow/prefer-arrow-functions": "error",
+
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase"
+          }
+        ],
+        "unicorn/import-style": "off",
+        "unicorn/no-null": "off",
+        "unicorn/no-array-reduce": "off",
+        "unicorn/no-array-for-each": "off",
+        "unicorn/prevent-abbreviations": "off",
+
+        "unused-imports/no-unused-imports-ts": "error",
+        "unused-imports/no-unused-vars-ts": [
+          "error",
+          {
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ]
+      }
+    }
+  ]
+}
