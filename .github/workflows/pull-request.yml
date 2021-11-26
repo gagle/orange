@@ -24,10 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Nx check changes
-        id: nx-changes
-        uses: gagle/nx-check-changes@v1.0.0
-
       - name: Check files to lint
         id: lint-files
         uses: dorny/paths-filter@v2
