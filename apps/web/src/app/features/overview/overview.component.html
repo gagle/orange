@@ -1,0 +1,9 @@
+<mat-form-field appearance="fill">
+  <mat-label>User id</mat-label>
+  <input
+    matInput
+    #input
+    [formControl]="userIdInputFilter"
+  >
+</mat-form-field>
+<app-posts-table [userId]="(userId$ | async)!"></app-posts-table>

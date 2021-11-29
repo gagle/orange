@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { Post as ApiPost, PostDetails } from '@orange/api-interfaces';
 
 import { CommentsService } from '../comments/services/comments.service';
@@ -14,8 +14,8 @@ export class PostsController {
   ) {}
 
   @Get()
-  getPosts(): Promise<ApiPost[]> {
-    return this.postsService.getPosts();
+  getPosts(@Query('userId') userId: string | undefined): Promise<ApiPost[]> {
+    return this.postsService.getPosts(userId ? Number.parseInt(userId) : undefined);
   }
 
   @Get(':id')

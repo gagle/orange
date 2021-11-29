@@ -18,14 +18,15 @@ export class PostsService {
 
   constructor(private configService: ConfigService<Configuration>) {}
 
-  async getPosts(): Promise<Post[]> {
+  async getPosts(userId: number | undefined): Promise<Post[]> {
     const { body } = await request(`${this.jsonPlaceholderBaseUrl}/posts`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json; charset=UTF-8',
       },
     });
-    return body.json();
+    const posts: Post[] = await body.json();
+    return userId === undefined ? posts : posts.filter(post => post.userId === userId);
   }
 
   async getPost(postId: number): Promise<Post> {

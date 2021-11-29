@@ -1,0 +1,96 @@
+<table
+  mat-table
+  [dataSource]="posts$"
+>
+  <ng-container [matColumnDef]="PostsTableColumns.Id">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      class="col-md-1"
+    >
+      Id
+    </th>
+
+    <td
+      mat-cell
+      class="col-md-1"
+      *matCellDef="let post"
+    > {{ post.id }} </td>
+  </ng-container>
+
+  <ng-container [matColumnDef]="PostsTableColumns.UserId">
+    <th
+      mat-header-cell
+      class="col-md-1"
+      *matHeaderCellDef
+    >
+      UserId
+    </th>
+
+    <td
+      mat-cell
+      class="col-md-1"
+      *matCellDef="let post"
+    > {{ post.userId }} </td>
+  </ng-container>
+
+  <ng-container [matColumnDef]="PostsTableColumns.Title">
+    <th
+      mat-header-cell
+      class="col-md-2"
+      *matHeaderCellDef
+    >
+      Title
+    </th>
+
+    <td
+      mat-cell
+      class="col-md-2"
+      *matCellDef="let post"
+    > {{ post.title }} </td>
+  </ng-container>
+
+  <ng-container [matColumnDef]="PostsTableColumns.Body">
+    <th
+      mat-header-cell
+      class="col-md-7"
+      *matHeaderCellDef
+    >
+      Body
+    </th>
+
+    <td
+      mat-cell
+      class="col-md-7"
+      *matCellDef="let post"
+    > {{ post.body }} </td>
+  </ng-container>
+
+  <ng-container [matColumnDef]="PostsTableColumns.EditAction">
+    <th
+      mat-header-cell
+      class="col-md-1"
+      *matHeaderCellDef
+    ></th>
+
+    <td
+      mat-cell
+      class="col-md-1"
+      *matCellDef="let post"
+    >
+      <span
+        class="link"
+        (click)="onEditPost(post)"
+      >Edit</span>
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="tableColumns"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: tableColumns"
+  ></tr>
+</table>

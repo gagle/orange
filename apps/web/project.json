@@ -19,7 +19,8 @@
         "scripts": [],
         "stylePreprocessorOptions": {
           "includePaths": ["apps/web/src/assets/scss"]
-        }
+        },
+        "aot": true
       },
       "configurations": {
         "production": {
