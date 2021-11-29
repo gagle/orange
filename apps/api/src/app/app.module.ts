@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CommentsModule } from './comments/comments.module';
 import { configuration } from './config/configuration';
+import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -12,8 +13,9 @@ import { configuration } from './config/configuration';
       load: [configuration],
       cache: true,
     }),
+    PostsModule,
+    UsersModule,
+    CommentsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

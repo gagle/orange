@@ -1,3 +1,3 @@
 # api-interfaces
 
-Common interfaces between frontend and the api.
+Common API interfaces between frontend and the api.
