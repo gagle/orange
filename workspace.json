@@ -3,6 +3,7 @@
   "projects": {
     "web": "apps/web",
     "api": "apps/api",
+    "common": "libs/common",
     "api-interfaces": "libs/api-interfaces"
   }
 }

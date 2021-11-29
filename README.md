@@ -41,6 +41,8 @@ npm run build:api
 
 # Test
 
+Coverage 100% accomplished.
+
 ```
 npm run test:web
 npm run test:api

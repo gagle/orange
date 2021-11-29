@@ -6,7 +6,9 @@ module.exports = {
   collectCoverage: true,
   coveragePathIgnorePatterns: [
     'node_modules',
-    'environment.*'
+    'environment.*',
+    '.mock.ts',
+    '.model.ts',
   ],
   coverageReporters: ['html', 'cobertura', 'lcov', 'text'],
   coverageThreshold: {

@@ -1,6 +1,5 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
   "plugins": [
     "@nrwl/nx",
     "import",
@@ -13,12 +12,15 @@
   "overrides": [
     {
       "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.*?.json"],
+        "createDefaultProgram": true
+      },
       "extends": [
         "plugin:@nrwl/nx/typescript",
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:unicorn/recommended",
-        "plugin:compat/recommended",
         "plugin:prettier/recommended",
         "plugin:jest/recommended",
         "plugin:jest/style"
@@ -56,7 +58,21 @@
         ],
 
         "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
 
         "jest/expect-expect": [
           "warn",
@@ -117,6 +133,16 @@
             "argsIgnorePattern": "^_"
           }
         ]
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "unicorn/no-null": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/no-useless-undefined": "off"
       }
     }
   ]

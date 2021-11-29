@@ -1,10 +1,10 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
       "extends": [
+        "plugin:compat/recommended",
         "plugin:@nrwl/nx/angular",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
@@ -42,6 +42,13 @@
             "code": 140
           }
         ]
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
       }
     }
   ]

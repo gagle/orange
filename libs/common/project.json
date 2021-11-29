@@ -1,0 +1,15 @@
+{
+  "root": "libs/common",
+  "sourceRoot": "libs/common/src",
+  "projectType": "library",
+  "architect": {
+    "lint": {
+      "builder": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/common/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
