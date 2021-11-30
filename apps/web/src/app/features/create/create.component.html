@@ -1,0 +1,60 @@
+<a
+  href="/"
+  class="link"
+>Overview</a>
+
+<form
+  [formGroup]="formGroup"
+  (submit)="submitCreatePost()"
+>
+  <mat-form-field
+    appearance="fill"
+    class="user-id-field"
+  >
+    <mat-label>User id</mat-label>
+    <input
+      matInput
+      #input
+      formControlName="userId"
+    >
+  </mat-form-field>
+
+  <mat-form-field
+    appearance="fill"
+    class="title-field"
+  >
+    <mat-label>Title</mat-label>
+    <input
+      matInput
+      #input
+      formControlName="title"
+    >
+  </mat-form-field>
+
+  <mat-form-field
+    appearance="fill"
+    class="body-field"
+  >
+    <mat-label>Body</mat-label>
+    <input
+      matInput
+      #input
+      formControlName="body"
+    >
+  </mat-form-field>
+
+  <button
+    class="submit-button"
+    mat-flat-button
+    color="primary"
+    type="submit"
+    [disabled]="formGroup.invalid"
+  >
+    Save
+  </button>
+
+  <span
+    *ngIf="saved"
+    class="saved-ok"
+  >Saved successfully!</span>
+</form>
