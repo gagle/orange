@@ -35,10 +35,25 @@ describe('PostsController', () => {
       const expectedPosts = [{ title: 'title' }] as Post[];
 
       postsService.getPosts = jest.fn(() => Promise.resolve(expectedPosts));
+      const userId = '';
 
-      const posts = await controller.getPosts();
+      const posts = await controller.getPosts(userId);
 
       expect(postsService.getPosts).toHaveBeenCalledTimes(1);
+      expect(postsService.getPosts).toHaveBeenCalledWith(undefined);
+      expect(posts).toEqual(expectedPosts);
+    });
+
+    it('should filter posts by userId', async () => {
+      const expectedPosts = [{ title: 'title' }] as Post[];
+
+      postsService.getPosts = jest.fn(() => Promise.resolve(expectedPosts));
+      const userId = '1';
+
+      const posts = await controller.getPosts(userId);
+
+      expect(postsService.getPosts).toHaveBeenCalledTimes(1);
+      expect(postsService.getPosts).toHaveBeenCalledWith(Number.parseInt(userId));
       expect(posts).toEqual(expectedPosts);
     });
   });
