@@ -1,0 +1,31 @@
+<a
+  href="/"
+  class="link"
+>Overview</a>
+
+<ng-container *ngIf="post$ | async as post">
+  <span>id: <b>{{ post.id }}</b></span>
+  <span>title: <b>{{ post.title }}</b></span>
+  <span>body: <b>{{ post.body }}</b></span>
+
+  <span class="section">User</span>
+  <ng-container *ngIf="post.user; let user">
+    <span>id: <b>{{ user.id }}</b></span>
+    <span>name: <b>{{ user.name }}</b></span>
+    <span>username: <b>{{ user.username }}</b></span>
+    <span>email: <b>{{ user.email }}</b></span>
+    <span>address (street): <b>{{ user.address.street }}</b></span>
+    <span>phone: <b>{{ user.phone }}</b></span>
+    <span>website: <b>{{ user.website }}</b></span>
+    <span>company (name): <b>{{ user.company.name }}</b></span>
+  </ng-container>
+
+  <span class="section">Comments</span>
+  <ng-container *ngFor="let comment of post.comments">
+    <span>id: <b>{{ comment.id }}</b></span>
+    <span>post id: <b>{{ comment.postId }}</b></span>
+    <span>name: <b>{{ comment.name }}</b></span>
+    <span>email: <b>{{ comment.email }}</b></span>
+    <span>body: <b>{{ comment.body }}</b></span>
+  </ng-container>
+</ng-container>

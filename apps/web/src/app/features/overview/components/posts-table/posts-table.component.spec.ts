@@ -65,4 +65,13 @@ describe('PostsTableComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/edit', 1]);
     });
   });
+
+  describe('onDetailsPost', () => {
+    it('should navigate to details page', () => {
+      component.onDetailsPost({ id: 1 } as Post);
+
+      expect(router.navigate).toHaveBeenCalledTimes(1);
+      expect(router.navigate).toHaveBeenCalledWith(['/details', 1]);
+    });
+  });
 });

@@ -53,7 +53,7 @@
   <ng-container [matColumnDef]="PostsTableColumns.Body">
     <th
       mat-header-cell
-      class="col-md-7"
+      class="col-md-6"
       *matHeaderCellDef
     >
       Body
@@ -61,27 +61,31 @@
 
     <td
       mat-cell
-      class="col-md-7"
+      class="col-md-6"
       *matCellDef="let post"
     > {{ post.body }} </td>
   </ng-container>
 
-  <ng-container [matColumnDef]="PostsTableColumns.EditAction">
+  <ng-container [matColumnDef]="PostsTableColumns.Actions">
     <th
       mat-header-cell
-      class="col-md-1"
+      class="col-md-2"
       *matHeaderCellDef
     ></th>
 
     <td
       mat-cell
-      class="col-md-1"
+      class="col-md-2 actions"
       *matCellDef="let post"
     >
       <span
         class="link"
         (click)="onEditPost(post)"
       >Edit</span>
+      <span
+        class="link"
+        (click)="onDetailsPost(post)"
+      >Details</span>
     </td>
   </ng-container>
 

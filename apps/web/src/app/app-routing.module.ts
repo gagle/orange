@@ -26,10 +26,10 @@ const routes: Routes = [
     path: 'edit/:postId',
     loadChildren: () => import('./features/edit/edit.module').then(m => m.EditModule),
   },
-  // {
-  //   path: 'details',
-  //   loadChildren: () => import('./features/details/details.module').then(m => m.DetailsModule),
-  // },
+  {
+    path: 'details/:postId',
+    loadChildren: () => import('./features/details/details.module').then(m => m.DetailsModule),
+  },
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { OverviewStoreService } from '../../store/overview.store.service';
 @Component({
   selector: 'app-posts-table',
   templateUrl: './posts-table.component.html',
+  styleUrls: ['./posts-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsTableComponent implements OnInit, OnDestroy, OnChanges {
@@ -47,6 +48,10 @@ export class PostsTableComponent implements OnInit, OnDestroy, OnChanges {
 
   onEditPost(post: Post): void {
     this.router.navigate(['/edit', post.id]);
+  }
+
+  onDetailsPost(post: Post): void {
+    this.router.navigate(['/details', post.id]);
   }
 
   private onUserIdChange(userId: string): void {

@@ -3,5 +3,5 @@ export enum PostsTableColumns {
   UserId = 'UserId',
   Title = 'Title',
   Body = 'Body',
-  EditAction = 'EditAction',
+  Actions = 'Actions',
 }
