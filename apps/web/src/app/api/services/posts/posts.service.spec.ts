@@ -2,11 +2,11 @@ import { createHttpFactory, HttpMethod, SpectatorHttp } from '@ngneat/spectator/
 import { Post, PostDetails } from '@orange/api-interfaces';
 
 import { apiUrl } from '../../config/config';
-import { PostService } from './post.service';
+import { PostsService } from './posts.service';
 
 describe('PostService', () => {
-  let spectator: SpectatorHttp<PostService>;
-  const createHttp = createHttpFactory(PostService);
+  let spectator: SpectatorHttp<PostsService>;
+  const createHttp = createHttpFactory(PostsService);
 
   beforeEach(() => (spectator = createHttp()));
 
@@ -19,6 +19,22 @@ describe('PostService', () => {
       });
 
       const request = spectator.expectOne(`${apiUrl}/posts`, HttpMethod.GET);
+
+      const response: Post[] = [];
+      request.flush(response);
+
+      expect(expectedPosts!).toEqual(response);
+    });
+
+    it('should filter by userId', () => {
+      let expectedPosts: Post[];
+      const userId = '1';
+
+      spectator.service.getPosts(userId).subscribe(posts => {
+        expectedPosts = posts;
+      });
+
+      const request = spectator.expectOne(`${apiUrl}/posts?userId=${userId}`, HttpMethod.GET);
 
       const response: Post[] = [];
       request.flush(response);

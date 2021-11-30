@@ -8,10 +8,10 @@ import { apiUrl } from '../../config/config';
 @Injectable({
   providedIn: 'root',
 })
-export class PostService {
+export class PostsService {
   constructor(private http: HttpClient) {}
 
-  getPosts(userId: string): Observable<Post[]> {
+  getPosts(userId = ''): Observable<Post[]> {
     let params = new HttpParams();
     if (userId) {
       params = params.append('userId', userId);
