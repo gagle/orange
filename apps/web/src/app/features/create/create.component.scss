@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  width: fit-content;
+  margin-bottom: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-id-field {
+  width: 100px;
+}
+
+.title-field,
+.body-field {
+  width: 100%;
+}
+
+.post-id-label {
+  margin-bottom: 16px;
+}
+
+.submit-button {
+  width: 64px;
+  margin-bottom: 16px;
+}
+
+.saved-ok {
+  color: #128612;
+}

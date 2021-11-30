@@ -18,10 +18,10 @@ const routes: Routes = [
     canActivate: [],
     loadChildren: () => import('./features/overview/overview.module').then(m => m.OverviewModule),
   },
-  // {
-  //   path: 'create',
-  //   loadChildren: () => import('./features/create/create.module').then(m => m.CreateModule),
-  // },
+  {
+    path: 'create',
+    loadChildren: () => import('./features/create/create.module').then(m => m.CreateModule),
+  },
   {
     path: 'edit/:postId',
     loadChildren: () => import('./features/edit/edit.module').then(m => m.EditModule),
