@@ -3,10 +3,10 @@ import { Post } from '@orange/api-interfaces';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 
-import { PostService } from '../../../api/services/post/post.service';
+import { PostsService } from '../../../api/services/posts/posts.service';
 
 /**
- * In memory redux-like store without error handling
+ * In memory redux-like store without error handling.
  */
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class OverviewStoreService {
   private postsSubject$ = new BehaviorSubject<Post[]>([]);
   posts$ = this.postsSubject$.asObservable();
 
-  constructor(private readonly postsService: PostService) {}
+  constructor(private readonly postsService: PostsService) {}
 
   loadPosts(userId: string): Observable<Post[]> {
     return this.postsService.getPosts(userId).pipe(
@@ -24,7 +24,7 @@ export class OverviewStoreService {
         this.postsSubject$.next(posts);
       }),
       catchError((error: Error) => {
-        console.error(error);
+        // Do something with the error
         return throwError(() => error);
       })
     );

@@ -33,7 +33,8 @@ describe('PostsService', () => {
 
   describe('getPosts', () => {
     it('should make the GET call', async () => {
-      await service.getPosts();
+      const userId = undefined;
+      await service.getPosts(userId);
 
       expect(request).toHaveBeenCalledTimes(1);
       expect(request).toHaveBeenCalledWith(
@@ -42,6 +43,28 @@ describe('PostsService', () => {
           method: 'GET',
         })
       );
+    });
+
+    it('should filter by userId', async () => {
+      (request as jest.Mock).mockReturnValue(
+        Promise.resolve({
+          body: {
+            json: () => Promise.resolve([{ userId: 1 }, { userId: 2 }] as Post[]),
+          },
+        })
+      );
+      const userId = 1;
+
+      const posts = await service.getPosts(userId);
+
+      expect(request).toHaveBeenCalledTimes(1);
+      expect(request).toHaveBeenCalledWith(
+        'jsonPlaceholderBaseUrl/posts',
+        expect.objectContaining({
+          method: 'GET',
+        })
+      );
+      expect(posts).toEqual([{ userId: 1 }] as Post[]);
     });
   });
 
