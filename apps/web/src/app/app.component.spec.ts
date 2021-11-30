@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
@@ -10,7 +9,7 @@ describe('AppComponent', () => {
 
   const createComponent = createComponentFactory({
     component: AppComponent,
-    imports: [HttpClientTestingModule, RouterTestingModule],
+    imports: [RouterTestingModule],
     detectChanges: false,
   });
 
