@@ -22,10 +22,10 @@ const routes: Routes = [
   //   path: 'create',
   //   loadChildren: () => import('./features/create/create.module').then(m => m.CreateModule),
   // },
-  // {
-  //   path: 'edit/:postId',
-  //   loadChildren: () => import('./features/edit/edit.module').then(m => m.EditModule),
-  // },
+  {
+    path: 'edit/:postId',
+    loadChildren: () => import('./features/edit/edit.module').then(m => m.EditModule),
+  },
   // {
   //   path: 'details',
   //   loadChildren: () => import('./features/details/details.module').then(m => m.DetailsModule),

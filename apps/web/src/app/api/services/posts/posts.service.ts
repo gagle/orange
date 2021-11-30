@@ -24,10 +24,10 @@ export class PostsService {
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(`${apiUrl}/post`, post);
+    return this.http.post<Post>(`${apiUrl}/posts`, post);
   }
 
   updatePost(post: Post): Observable<Post> {
-    return this.http.put<Post>(`${apiUrl}/post`, post);
+    return this.http.put<Post>(`${apiUrl}/posts/${post.id}`, post);
   }
 }

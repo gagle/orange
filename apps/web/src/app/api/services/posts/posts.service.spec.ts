@@ -72,7 +72,7 @@ describe('PostService', () => {
 
       spectator.service.createPost(post).subscribe();
 
-      const request = spectator.expectOne(`${apiUrl}/post`, HttpMethod.POST);
+      const request = spectator.expectOne(`${apiUrl}/posts`, HttpMethod.POST);
 
       expect(request.request.body).toEqual(post);
     });
@@ -80,7 +80,9 @@ describe('PostService', () => {
 
   describe('updatePost', () => {
     it('should update a post', () => {
+      const postId = 1;
       const post: Post = {
+        id: postId,
         userId: 1,
         title: 'title',
         body: 'body',
@@ -88,7 +90,7 @@ describe('PostService', () => {
 
       spectator.service.updatePost(post).subscribe();
 
-      const request = spectator.expectOne(`${apiUrl}/post`, HttpMethod.PUT);
+      const request = spectator.expectOne(`${apiUrl}/posts/${postId}`, HttpMethod.PUT);
 
       expect(request.request.body).toEqual(post);
     });

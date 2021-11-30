@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
 import { OverviewPageComponent } from './overview.component';
@@ -9,7 +8,6 @@ describe('OverviewPageComponent', () => {
 
   const createComponent = createComponentFactory({
     component: OverviewPageComponent,
-    imports: [HttpClientTestingModule],
     shallow: true,
   });
 
